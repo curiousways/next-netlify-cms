@@ -1,5 +1,5 @@
 backend:
-  name: git-gateway
+  name: test-repo
   branch: main # Branch to update (optional; defaults to master)
 media_folder: public/img
 public_folder: img
@@ -11,6 +11,46 @@ collections:
         name: "home"
         file: "content/home.md"
         fields:
-          - { label: "Author", name: "author", widget: "string" }
+          - { label: "Title", name: "title", widget: "string" }
           - { label: "Published Date", name: "date", widget: "datetime" }
           - { label: "Body", name: "body", widget: "markdown" }
+      - label: "About"
+        name: "about"
+        file: "content/about.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Company", name: "company", widget: "string" }
+          - { label: "Published Date", name: "date", widget: "datetime" }
+          - { label: "Body", name: "body", widget: "markdown" }
+          - label: "People"
+            name: "people"
+            widget: list
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Role", "name": "role", widget: "string" }
+  - name: "blog"
+    label: "Blog"
+    folder: "content/posts"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: "Author",
+          name: "author",
+          widget: "relation",
+          collection: "author",
+          value_field: "name",
+          search_fields: ["name"],
+        }
+      - { label: "Published Date", name: "date", widget: "datetime" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "author"
+    label: "Author"
+    folder: "content/authors"
+    create: true
+    slug: "{{name}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Image", name: "image", widget: "image", required: false }
